@@ -35,9 +35,29 @@ document.addEventListener("DOMContentLoaded", () => {
         foodX = randomFoodCords(0, boardWidth - unitSize);
         foodY = randomFoodCords(0, boardHeight - unitSize);
 
-        context.fillStyle = "#5CCAF6";
+        context.fillStyle = "#FF0037";
         context.fillRect(foodX, foodY, unitSize, unitSize);
     };
 
-    createFood();
+    const clearBoard = () => {
+        context.fillStyle = "#293447";
+        context.fillRect(0, 0, boardWidth, boardHeight);
+    };
+
+    const drawSnake = () => {
+        context.fillStyle = "#5DCBF9";
+        context.strokeStyle = snake;
+        snake.forEach((part) => {
+            context.fillRect(part.x, part.y, unitSize, unitSize);
+            context.strokeRect(part.x, part.y, unitSize, unitSize);
+        });
+    };
+
+    const startGame = () => {
+        clearBoard();
+        drawSnake();
+        createFood();
+    };
+
+    startGame();
 });
