@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const scoreText = document.querySelector("#score");
 
+    const unitSize = 25;
+
     let running = false;
     let xVelocity = 25;
     let yVelocity = 0;
@@ -21,4 +23,21 @@ document.addEventListener("DOMContentLoaded", () => {
             y: 0,
         },
     ];
+
+    const createFood = () => {
+        const randomFoodCords = (min, max) => {
+            const randNumb =
+                Math.round((Math.random() * (max - min) + min) / unitSize) *
+                unitSize;
+            return randNumb;
+        };
+
+        foodX = randomFoodCords(0, boardWidth - unitSize);
+        foodY = randomFoodCords(0, boardHeight - unitSize);
+
+        context.fillStyle = "#5CCAF6";
+        context.fillRect(foodX, foodY, unitSize, unitSize);
+    };
+
+    createFood();
 });
