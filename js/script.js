@@ -22,6 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
             x: 0,
             y: 0,
         },
+        {
+            x: 0 + unitSize,
+            y: 0 + unitSize,
+        },
     ];
 
     function startGame() {
@@ -35,6 +39,31 @@ document.addEventListener("DOMContentLoaded", () => {
     startGame();
 
     window.addEventListener("keydown", (e) => changeDirection(e));
+
+    function changeDirection(e) {
+        switch (true) {
+            case e.keyCode === 37 && !(xVelocity === unitSize):
+                currentDirection = "left";
+                xVelocity = -unitSize;
+                yVelocity = 0;
+                break;
+            case e.keyCode === 38 && !(yVelocity === unitSize):
+                currentDirection = "up";
+                xVelocity = 0;
+                yVelocity = -unitSize;
+                break;
+            case e.keyCode === 39 && !(xVelocity === -unitSize):
+                currentDirection = "right";
+                xVelocity = unitSize;
+                yVelocity = 0;
+                break;
+            case e.keyCode === 40 && !(yVelocity === -unitSize):
+                currentDirection = "down";
+                xVelocity = 0;
+                yVelocity = unitSize;
+                break;
+        }
+    }
 
     function createFood() {
         const randomFoodCords = (min, max) => {
@@ -70,24 +99,31 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function snakeMove() {
-        const snakeHead = {
+        const newHead = {
             x: snake[0].x + xVelocity,
             y: snake[0].y + yVelocity,
         };
 
-        snake.unshift(snakeHead);
+        if (
+            newHead.x < 0 ||
+            newHead.x >= boardWidth ||
+            newHead.y < 0 ||
+            newHead.y >= boardHeight
+        ) {
+            running = false;
+            return;
+        }
+
+        snake.unshift(newHead);
 
         if (snake[0].x === foodX && snake[0].y === foodY) {
             score += 1;
-
-            scoreText.textContent = score;
-
+            scoreText.textContent = `Score: ${score}`;
             createFood();
         } else {
             snake.pop();
         }
     }
-
     function tick() {
         if (running) {
             setTimeout(() => {
@@ -95,30 +131,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 drawFood();
                 snakeMove();
                 drawSnake();
+                gameOver();
                 tick();
             }, 75);
         } else {
         }
     }
 
-    function changeDirection(e) {
-        switch (true) {
-            case e.keyCode === 37 && !(xVelocity === unitSize):
-                xVelocity = -unitSize;
-                yVelocity = 0;
-                break;
-            case e.keyCode === 38 && !(yVelocity === unitSize):
-                xVelocity = 0;
-                yVelocity = -unitSize;
-                break;
-            case e.keyCode === 39 && !(xVelocity === -unitSize):
-                xVelocity = unitSize;
-                yVelocity = 0;
-                break;
-            case e.keyCode === 40 && !(yVelocity === -unitSize):
-                xVelocity = 0;
-                yVelocity = unitSize;
-                break;
+    function gameOver() {
+        if (
+            snake[0].x < 0 ||
+            snake[0].x >= boardWidth ||
+            snake[0].y < 0 ||
+            snake[0].y >= boardHeight
+        ) {
+            running = false;
+        }
+        for (let i = 1; i < snake.length; i += 1) {
+            if (snake[i].x == snake[0].x && snake[i].y == snake[0].y) {
+                running = false;
+            }
         }
     }
 });
