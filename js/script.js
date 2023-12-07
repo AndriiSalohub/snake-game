@@ -1,7 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
     const board = document.querySelector(".game-board");
     const context = board.getContext("2d");
-    let boardHeight = 600; // Начальные размеры
+
+    const resetBtn = document.querySelector(".reset-btn");
+
+    let boardHeight = 600;
     let boardWidth = 600;
 
     const scoreText = document.querySelector("#score");
@@ -130,6 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
             snake.pop();
         }
     }
+
     function tick() {
         if (running) {
             setTimeout(() => {
@@ -141,7 +145,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 tick();
             }, 100);
         } else {
+            displayGameOver();
         }
+    }
+
+    function displayGameOver() {
+        context.font = "40px Courier New";
+        context.fillStyle = "black";
+        context.textAlign = "center";
+        context.fillText("Game Over", boardWidth / 2, boardHeight / 2);
+        running = false;
     }
 
     function gameOver() {
@@ -159,4 +172,21 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     }
+
+    function resetGame() {
+        score = 0;
+        scoreText.textContent = `Score: ${score}`;
+        snake = [
+            {
+                x: 0,
+                y: 0,
+            },
+        ];
+        xVelocity = unitSize;
+        yVelocity = 0;
+
+        startGame();
+    }
+
+    resetBtn.addEventListener("click", resetGame);
 });
