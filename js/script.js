@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const board = document.querySelector(".game-board");
     const context = board.getContext("2d");
-    const boardHeight = board.offsetHeight;
-    const boardWidth = board.offsetWidth;
+    let boardHeight = 600; // Начальные размеры
+    let boardWidth = 600;
 
     const scoreText = document.querySelector("#score");
 
@@ -28,7 +28,15 @@ document.addEventListener("DOMContentLoaded", () => {
         },
     ];
 
+    function setBoardSize() {
+        boardHeight = board.offsetHeight;
+        boardWidth = board.offsetWidth;
+        board.height = boardHeight;
+        board.width = boardWidth;
+    }
+
     function startGame() {
+        setBoardSize();
         running = true;
         clearBoard();
         drawSnake();
@@ -38,27 +46,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     startGame();
 
+    window.addEventListener("resize", setBoardSize);
+
     window.addEventListener("keydown", (e) => changeDirection(e));
 
     function changeDirection(e) {
         switch (true) {
             case e.keyCode === 37 && !(xVelocity === unitSize):
-                currentDirection = "left";
                 xVelocity = -unitSize;
                 yVelocity = 0;
                 break;
             case e.keyCode === 38 && !(yVelocity === unitSize):
-                currentDirection = "up";
                 xVelocity = 0;
                 yVelocity = -unitSize;
                 break;
             case e.keyCode === 39 && !(xVelocity === -unitSize):
-                currentDirection = "right";
                 xVelocity = unitSize;
                 yVelocity = 0;
                 break;
             case e.keyCode === 40 && !(yVelocity === -unitSize):
-                currentDirection = "down";
                 xVelocity = 0;
                 yVelocity = unitSize;
                 break;
@@ -133,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 drawSnake();
                 gameOver();
                 tick();
-            }, 75);
+            }, 100);
         } else {
         }
     }
