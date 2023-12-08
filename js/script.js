@@ -189,4 +189,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     resetBtn.addEventListener("click", resetGame);
+
+    window.addEventListener("keydown", (e) => {
+        if (!running) {
+            if (e.key === "Enter") {
+                resetGame();
+            }
+        }
+    });
 });
