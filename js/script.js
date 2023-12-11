@@ -10,10 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const scoreText = document.querySelector("#score");
 
-    const unitSize = 25;
+    const unitSize = boardHeight === 600 ? 25 : 20;
 
     let running = false;
-    let xVelocity = 25;
+    let xVelocity = boardHeight === 600 ? 25 : 20;
     let yVelocity = 0;
 
     let foodX;
@@ -141,16 +141,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    console.log(boardHeight);
+
     function tick() {
         if (running) {
-            setTimeout(() => {
-                clearBoard();
-                drawFood();
-                snakeMove();
-                drawSnake();
-                gameOver();
-                tick();
-            }, 100);
+            setTimeout(
+                () => {
+                    clearBoard();
+                    drawFood();
+                    snakeMove();
+                    drawSnake();
+                    gameOver();
+                    tick();
+                },
+                boardHeight === 300 ? 150 : 100
+            );
         } else {
             displayGameOver();
         }
