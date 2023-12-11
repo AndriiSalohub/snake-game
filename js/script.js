@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const board = document.querySelector(".game-board");
     const context = board.getContext("2d");
+    const controls = document.querySelectorAll(".control i");
 
     const resetBtn = document.querySelector(".reset-btn");
 
@@ -53,6 +54,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.addEventListener("keydown", (e) => changeDirection(e));
 
+    controls.forEach((button) =>
+        button.addEventListener("click", () =>
+            changeDirection({ keyCode: +button.dataset.key })
+        )
+    );
+
     function changeDirection(e) {
         switch (true) {
             case e.keyCode === 37 && !(xVelocity === unitSize):
@@ -94,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function clearBoard() {
-        context.fillStyle = "#293447";
+        context.fillStyle = "#202837";
         context.fillRect(0, 0, boardWidth, boardHeight);
     }
 

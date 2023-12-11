@@ -6,6 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="css/reset.css" />
         <link rel="stylesheet" href="css/style.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        />
         <title>Snake game</title>
     </head>
     <body>
@@ -17,6 +21,24 @@
                 <h2 class="current-score" id="score">Score: 0</h2>
             </div>
             <canvas class="game-board"></canvas>
+            <section class="control">
+                <i
+                    data-key="37"
+                    class="fa-solid fa-arrow-left-long control-arrow"
+                ></i>
+                <i
+                    data-key="38"
+                    class="fa-solid fa-arrow-up-long control-arrow"
+                ></i>
+                <i
+                    data-key="39"
+                    class="fa-solid fa-arrow-right-long control-arrow"
+                ></i>
+                <i
+                    data-key="40"
+                    class="fa-solid fa-arrow-down-long control-arrow"
+                ></i>
+            </section>
             <button class="reset-btn">Reset</button>
         </main>
         <script type="module" src="js/script.js"></script>
